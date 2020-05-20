@@ -19,6 +19,7 @@ public class PlayerToFloorPosition : MonoBehaviour
     private float changeZ = 0f;
 
     private bool hitZero = true;
+    private bool playerOnFloor = false;
 
     private float finalY = 0f;
     private float finalZ = 0f;
@@ -28,6 +29,16 @@ public class PlayerToFloorPosition : MonoBehaviour
     private float timeDelta = 0f;
 
     private int oldFloorTagNumber;
+
+    void OnCollisionEnter(Collision collisionInfo) {
+        Debug.Log(collisionInfo.collider);
+        if(collisionInfo.collider.tag == "Player")
+        {
+            Debug.Log("here");
+            playerOnFloor = true;
+            //playerMovement.enabled = false;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -40,50 +51,48 @@ public class PlayerToFloorPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // GameObject player = GameObject.FindGameObjectWithTag("Player");
-        // GameObject floorObj = GameObject.FindGameObjectsWithTag("Floor")[GameObject.FindGameObjectsWithTag("Floor").Length - 1];
-        // Transform floor = GameObject.FindGameObjectsWithTag("Floor")[GameObject.FindGameObjectsWithTag("Floor").Length - 1].transform;
-        float absDistance = Vector3.Distance(player.transform.position, floor.position);
         float endDistance = player.transform.position.z - floor.position.z;
-        //Debug.Log(timeFall);
-        // Debug.Log(endDistance);
-        if((endDistance > 65) && (endDistance < 60))
+        float floorLength = floor.localScale.z;
+        if((endDistance > (floorLength/2*0.95)) && (endDistance < floorLength/2*0.98))
         {
-            //Debug.Log("change");
             timeDelta = Time.time;
             initPosition = player.transform.position;
         }
-        if((endDistance >= 65) && (hitZero == true))
+        if((endDistance >= (floorLength/2*.98)) && (hitZero == true))
         {
+            playerOnFloor = false;
             hitZero = false;
-            float timeFall = Random.Range(1f,3.0f);
+            float nowTime = Time.time;
+            float timeFall = Random.Range(2.5f,5.0f);
+            Vector3 nowPlayerPos = player.transform.position;
             // Debug.Log("init");
-            // Debug.Log(Time.time);
-            // Debug.Log(player.transform.position);
+            // Debug.Log(nowTime);
+            // Debug.Log(timeDelta);
+            // Debug.Log(nowPlayerPos);
             // Debug.Log(initPosition);
             // Debug.Log("vel");
-            zVelocity = ((player.transform.position.z - initPosition.z)) / (Time.time - timeDelta);
-            yVelocity = ((player.transform.position.y - initPosition.y)) / (Time.time - timeDelta);
+            zVelocity = ((nowPlayerPos.z - initPosition.z)) / (nowTime - timeDelta);
+            yVelocity = ((nowPlayerPos.y - initPosition.y)) / (nowTime - timeDelta);
             // Debug.Log(zVelocity);
             // Debug.Log(yVelocity);
-            changeY = (yVelocity * timeFall) + ((0.5f * Physics.gravity.magnitude) * Mathf.Pow(timeFall,2));
+            // Debug.Log("TF");
+            // Debug.Log(timeFall);
+            changeY = (yVelocity * timeFall) + ((0.5f * -Physics.gravity.magnitude) * Mathf.Pow(timeFall,2));
             changeZ = zVelocity * timeFall;
             // Debug.Log("Change");
             // Debug.Log(changeY);
             // Debug.Log(changeZ);
-            //finalY = (yVelocity * Mathf.Sin(20) * 5f) + (4.9f * Mathf.Pow(5,2));
-            // velocity = ((player.transform.position - initPosition).magnitude) / Time.deltaTime;
-            // float gravity = Physics.gravity.magnitude;
-            // Debug.Log(Physics.gravity.magnitude);
-            // Debug.Log(changeY);
-            // Debug.Log(changeZ);
-            float newLength = Mathf.Round(Random.Range(150,400));
-
-            finalY = floor.position.y + changeY - (Mathf.Tan(20) * 70);
-            finalZ = floor.position.z + changeZ + newLength/2;
+            float newLength = Mathf.Round(Random.Range(350,600));
+            // Debug.Log("Newlength");
+            // Debug.Log(newLength);
+            finalY = floor.position.y + changeY - (Mathf.Tan((20 * Mathf.PI / 180)) * newLength/2);
+            finalZ = floor.position.z + changeZ + newLength/3 - 100;
+            Debug.Log(finalZ - floor.position.z);
+            if((newLength/(finalZ - floor.position.z)) > 0.2){
+                finalZ += newLength / 4; 
+            }
             finalX = floor.transform.position.x;
-            // finalY = -(Mathf.Pow(5,2) * gravity + Mathf.Sin(20) * Mathf.Sqrt(velocity));
-            // finalZ = -finalY / Mathf.Tan(20) + 50;
+            // Debug.Log("Final");
             // Debug.Log(finalZ);
             // Debug.Log(finalY);
             // Debug.Log(finalX);
@@ -93,7 +102,6 @@ public class PlayerToFloorPosition : MonoBehaviour
             newFloor.transform.localScale = newScale;
             createObstacles(newScale);
             // Debug.Log("=====");
-            timeChange = Time.time;
         }
 
         if(GameObject.FindGameObjectsWithTag("Floor").Length == 3) {
@@ -108,11 +116,18 @@ public class PlayerToFloorPosition : MonoBehaviour
 
     void createObstacles(Vector3 scale){
         float beginningZ = newFloor.transform.position.z - (scale.z/2);
-        int squaresDistance = 30;
-        int sizeOfObs = 3;
+        float squaresDistance = 30f;
+        float sizeOfObs = 3f;
         float numberRows = Mathf.Floor(scale.z / squaresDistance);
         float numberColumns = scale.x / sizeOfObs;
         string newTag;
+
+        Debug.Log(numberRows);
+        if(numberColumns == 2.0){
+            numberRows *= 2f;
+            squaresDistance /= 2f;
+        }
+        Debug.Log(numberRows);
 
         if(GameObject.FindGameObjectsWithTag("Obstacle1").Length == 0) {
             newTag = "Obstacle1";
@@ -135,7 +150,22 @@ public class PlayerToFloorPosition : MonoBehaviour
             {
                 if(j != noObs) 
                 {
-                    float xPosition = (j*sizeOfObs) - (numberColumns) + (sizeOfObs / 2 / sizeOfObs);
+                    float xPosition;
+
+                    if(numberColumns % 2 == 0)  {
+                        if(j < (numberColumns/2)) {
+                            xPosition = 0f - (sizeOfObs/2) - ((numberColumns/2 - (j+1)) * sizeOfObs);
+                        } else {
+                            xPosition = 0f + (sizeOfObs/2) + ((j-(numberColumns/2)) * sizeOfObs);
+                        }
+                    } else {
+                        if(j <= Mathf.Floor(numberColumns/2)) {
+                            xPosition = 0f - ((Mathf.Floor(numberColumns/2) - j) * sizeOfObs);
+                        } else {
+                            xPosition = ((j-Mathf.Floor(numberColumns/2)) * sizeOfObs);
+                        }
+                    }
+    
                     Vector3 obsPosition = new Vector3(xPosition, yPosition, zPosition);
                     GameObject newObs = Instantiate(obstaclePrefab, obsPosition, newFloor.transform.rotation);
                     newObs.gameObject.tag = newTag;
@@ -145,10 +175,10 @@ public class PlayerToFloorPosition : MonoBehaviour
     }
 
     float getRandomThreeMult() {
-        float newNum = Mathf.Round(Random.Range(4f,16f));
+        float newNum = Mathf.Round(Random.Range(6,18));
         while (newNum % 3 != 0)
         {
-            newNum = Random.Range(6,18);
+            newNum = Mathf.Round(Random.Range(6,18));
         }
         return newNum;
     }
