@@ -55,12 +55,12 @@ public class PlayerToFloorPosition : MonoBehaviour
         float floorLength = floor.localScale.z;
         if((endDistance > (floorLength/2*0.95)) && (endDistance < floorLength/2*0.98))
         {
+            playerOnFloor = false;
             timeDelta = Time.time;
             initPosition = player.transform.position;
         }
         if((endDistance >= (floorLength/2*.98)) && (hitZero == true))
         {
-            playerOnFloor = false;
             hitZero = false;
             float nowTime = Time.time;
             float timeFall = Random.Range(2.5f,5.0f);
@@ -86,8 +86,8 @@ public class PlayerToFloorPosition : MonoBehaviour
             // Debug.Log("Newlength");
             // Debug.Log(newLength);
             finalY = floor.position.y + changeY - (Mathf.Tan((20 * Mathf.PI / 180)) * newLength/2);
-            finalZ = floor.position.z + changeZ + newLength/3 - 100;
-            Debug.Log(finalZ - floor.position.z);
+            finalZ = floor.position.z + changeZ + newLength/4 - 100;
+            // Debug.Log(finalZ - floor.position.z);
             if((newLength/(finalZ - floor.position.z)) > 0.2){
                 finalZ += newLength / 4; 
             }
@@ -110,6 +110,10 @@ public class PlayerToFloorPosition : MonoBehaviour
             for(var i = 0 ; i < oldObstacles.Length ; i ++){
                 Destroy(oldObstacles[i]);
             }
+        }
+
+        if(((Mathf.Abs(player.transform.position.x) > (floor.localScale.x/2))) && (playerOnFloor == true)) {
+            FindObjectOfType<GameManager>().EndGame();
         }
 
     }

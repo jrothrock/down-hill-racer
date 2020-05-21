@@ -6,8 +6,8 @@ public class PlayerCollision : MonoBehaviour
     void OnCollisionEnter(Collision collisionInfo) {
         if(collisionInfo.collider.tag == "Obstacle1" || collisionInfo.collider.tag == "Obstacle2" || collisionInfo.collider.tag == "Obstacle3")
         {
-            Debug.Log("hit");
-            //playerMovement.enabled = false;
+            playerMovement.enabled = false;
+            FindObjectOfType<GameManager>().EndGame();
         }
     }
     // Start is called before the first frame update
