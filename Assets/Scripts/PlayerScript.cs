@@ -16,30 +16,18 @@ public class PlayerScript : MonoBehaviour
     {
         rb.AddForce(0,-40,forwardForce * Time.deltaTime);
 
-        // float x = Input.GetAxis("Horizontal") * Time.fixedDeltaTime * sidewaysSpeed;
-        // rb.MovePosition(rb.position + Vector3.right * x);
-        // if(Input.GetAxis("Horizontal") > 0)
-        // {
-        //     rb.AddForce(sidewaysForce * Time.deltaTime,0,0);
-        // } 
-        
-        // if(Input.GetAxis("Horizontal") < 0)
-        // {
-        //     rb.AddForce(-sidewaysForce * Time.deltaTime,0,0);
-        // } 
-
-        if(Input.GetKey("right"))
+        float x = Input.GetAxis("Horizontal") * Time.fixedDeltaTime * sidewaysSpeed;
+        rb.MovePosition(rb.position + Vector3.right * x);
+        if(Input.GetAxis("Horizontal") > 0)
         {
             rb.AddForce(sidewaysForce * Time.deltaTime,0,0);
         } 
         
-        if(Input.GetKey("left"))
+        if(Input.GetAxis("Horizontal") < 0)
         {
             rb.AddForce(-sidewaysForce * Time.deltaTime,0,0);
         } 
 
-        // Debug.Log("vel");
-        // Debug.Log(rb.velocity.sqrMagnitude);
         if(rb.velocity.sqrMagnitude > 1225) {
             rb.velocity = rb.velocity.normalized * 35;
         }

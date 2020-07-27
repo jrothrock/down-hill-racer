@@ -93,9 +93,9 @@ public class PlayerToFloorPosition : MonoBehaviour
             }
             finalX = floor.transform.position.x;
             // Debug.Log("Final");
-            // Debug.Log(finalZ);
-            // Debug.Log(finalY);
-            // Debug.Log(finalX);
+            Debug.Log(finalZ);
+            Debug.Log(finalY);
+            Debug.Log(finalX);
             newFloor = Instantiate(floorPrefab, new Vector3(finalX, finalY, finalZ), floor.rotation);
             float newWidth = getRandomThreeMult();
             Vector3 newScale = new Vector3(newWidth, 1, newLength);
@@ -112,7 +112,8 @@ public class PlayerToFloorPosition : MonoBehaviour
             }
         }
 
-        if(((Mathf.Abs(player.transform.position.x) > (floor.localScale.x/2))) && (playerOnFloor == true)) {
+        if(((Mathf.Abs(player.transform.position.x) > (floor.localScale.x/2 + 0.5))) && (playerOnFloor == true)) {
+            FindObjectOfType<Score>().allowScore(false);
             FindObjectOfType<GameManager>().EndGame();
         }
 
