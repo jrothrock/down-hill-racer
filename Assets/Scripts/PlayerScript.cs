@@ -2,34 +2,34 @@
 
 public class PlayerScript : MonoBehaviour
 {
-    public float forwardForce = 800f;
-    public float sidewaysForce = 1600f;
-    public float sidewaysSpeed = 15f;
+    public float ForwardForce = 800f;
+    public float SidewaysForce = 1600f;
+    public float SideWaysSpeed = 15f;
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
     private void Start() {
-        rb = GetComponent<Rigidbody>(); 
+        _rb = GetComponent<Rigidbody>(); 
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.AddForce(0,-40,forwardForce * Time.deltaTime);
+        _rb.AddForce(0,-40,ForwardForce * Time.deltaTime);
 
-        float x = Input.GetAxis("Horizontal") * Time.fixedDeltaTime * sidewaysSpeed;
-        rb.MovePosition(rb.position + Vector3.right * x);
-        if(Input.GetAxis("Horizontal") > 0)
+        float x = Input.GetAxis("Horizontal") * Time.fixedDeltaTime * SideWaysSpeed;
+        _rb.MovePosition(_rb.position + Vector3.right * x);
+        if (Input.GetAxis("Horizontal") > 0)
         {
-            rb.AddForce(sidewaysForce * Time.deltaTime,0,0);
+            _rb.AddForce(SidewaysForce * Time.deltaTime,0,0);
         } 
         
-        if(Input.GetAxis("Horizontal") < 0)
+        if (Input.GetAxis("Horizontal") < 0)
         {
-            rb.AddForce(-sidewaysForce * Time.deltaTime,0,0);
+            _rb.AddForce(-SidewaysForce * Time.deltaTime,0,0);
         } 
 
-        if(rb.velocity.sqrMagnitude > 1225) {
-            rb.velocity = rb.velocity.normalized * 35;
+        if (_rb.velocity.sqrMagnitude > 1225) {
+            _rb.velocity = _rb.velocity.normalized * 35;
         }
     }
 }

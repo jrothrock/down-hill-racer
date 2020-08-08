@@ -3,9 +3,11 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    public Transform player;
-    public Text scoreText;
-    public bool _canUpdate = true;
+    public Transform Player;
+    public Text ScoreText;
+    private bool _allowScore;
+
+    public bool AllowScore { get {return _allowScore;} set {_allowScore = value;} }
 
     // Update is called once per frame
     void Update()
@@ -13,17 +15,10 @@ public class Score : MonoBehaviour
         updateScore();
     }
 
-    public void allowScore(bool allowScore)
-    {
-        Debug.Log("called");
-        Debug.Log(allowScore);
-        _canUpdate = allowScore;
-    }
-
     public void updateScore()
     {
-        if(_canUpdate == true) {
-            scoreText.text = (Mathf.Floor(player.position.z + 52)).ToString();
+        if (_allowScore) {
+            ScoreText.text = (Mathf.Floor(Player.position.z + 52)).ToString();
         }
     }
 }

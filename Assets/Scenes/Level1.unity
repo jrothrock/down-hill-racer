@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45acf9435465458a95f53a955cc7c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 663432752}
+  PlayerMovement: {fileID: 663432752}
 --- !u!114 &663432752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,9 +495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86bc2e501b5aa4098a4b4386f3ffa39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 800
-  sidewaysForce: 720
-  sidewaysSpeed: 15
+  ForwardForce: 800
+  SidewaysForce: 1600
+  SideWaysSpeed: 15
 --- !u!54 &663432753
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -636,10 +636,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a78f8e18410314c1394208cba36089bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartDelay: 1
-  currentPauseState: 0
-  pausePanel: {fileID: 1072398758}
-  pauseText: {fileID: 1175946029}
+  PausePanel: {fileID: 1072398758}
+  PauseText: {fileID: 1175946029}
+  RestartDelay: 1
 --- !u!4 &825875736
 Transform:
   m_ObjectHideFlags: 0
@@ -966,9 +965,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f155635a91d24c298e6a2a23b9bb9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 663432750}
-  scoreText: {fileID: 1400034963}
-  _canUpdate: 1
+  Player: {fileID: 663432750}
+  ScoreText: {fileID: 1400034963}
 --- !u!114 &1400034963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5943,5 +5941,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1897165418383321670, guid: cdcd1ddb832734aa1ba5e989d6066edd,
         type: 3}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 663432746}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: Floor
+      value: 
+      objectReference: {fileID: 5836678985883511528}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: FloorPrefab
+      value: 
+      objectReference: {fileID: 5836678985972314468, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: ObstaclePrefab
+      value: 
+      objectReference: {fileID: 1897165418383321670, guid: cdcd1ddb832734aa1ba5e989d6066edd,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f3eb5ab0fd2a47148cb7ffef914815d, type: 3}
+--- !u!4 &5836678985883511528 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5836678985972314464, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5836678985883511527}
+  m_PrefabAsset: {fileID: 0}

@@ -4,20 +4,25 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    bool gameHasEnded = false;
-    public float restartDelay = 1f;
+    public GameObject PausePanel;
+    public GameObject PauseText;
 
-    public int currentPauseState = 0;
-    public GameObject pausePanel;
-    public GameObject pauseText;
+    public float RestartDelay = 1f;
+    private bool _gameHasEnded = false;
+    private bool _currentlyPaused = false;
+
+    // Start is called before the first frame update
+    public void Start()
+    {
+        FindObjectOfType<Score>().AllowScore = true;
+    }
 
     public void EndGame()
     {
-        if(gameHasEnded == false){
-            gameHasEnded = true;
+        if (!_gameHasEnded) {
+            _gameHasEnded = true;
             Debug.Log("Game Over");
-            Invoke("Restart", restartDelay);
+            Invoke("Restart", RestartDelay);
         }
     }
 
@@ -29,10 +34,10 @@ public class GameManager : MonoBehaviour
 
     public void HandlePause()
     {
-        if(currentPauseState == 0) {
-            PauseGame();
-        } else {
+        if (_currentlyPaused) {
             ResumeGame();
+        } else {
+            PauseGame();
         }
     }
 
@@ -44,16 +49,16 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
-        pausePanel.SetActive(true);
-        pauseText.SetActive(true);
-        currentPauseState = 1;
+        PausePanel.SetActive(true);
+        PauseText.SetActive(true);
+        _currentlyPaused = true;
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        pausePanel.SetActive(false);
-        pauseText.SetActive(false);
-        currentPauseState = 0;
+        PausePanel.SetActive(false);
+        PauseText.SetActive(false);
+        _currentlyPaused = false;
     }
 }

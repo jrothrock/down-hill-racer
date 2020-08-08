@@ -294,10 +294,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a78f8e18410314c1394208cba36089bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartDelay: 1
-  currentPauseState: 0
   pausePanel: {fileID: 0}
   pauseText: {fileID: 0}
+  RestartDelay: 1
 --- !u!4 &216735653
 Transform:
   m_ObjectHideFlags: 0
@@ -520,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45acf9435465458a95f53a955cc7c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 663432752}
+  PlayerMovement: {fileID: 0}
 --- !u!114 &663432752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,9 +532,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86bc2e501b5aa4098a4b4386f3ffa39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 0
-  sidewaysForce: 0
-  sidewaysSpeed: 15
+  ForwardForce: 800
+  SidewaysForce: 1600
+  SideWaysSpeed: 15
 --- !u!54 &663432753
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5719,6 +5718,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824189486}
   m_CullTransparentMesh: 0
+--- !u!4 &1865632932 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5836678985972314464, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5836678985883511527}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1897165416407965783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5880,6 +5885,28 @@ PrefabInstance:
     - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
         type: 3}
       propertyPath: obstaclePrefab
+      value: 
+      objectReference: {fileID: 1897165418383321670, guid: cdcd1ddb832734aa1ba5e989d6066edd,
+        type: 3}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: Floor
+      value: 
+      objectReference: {fileID: 1865632932}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 663432746}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: FloorPrefab
+      value: 
+      objectReference: {fileID: 5836678985972314468, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+    - target: {fileID: 5836678985972314479, guid: 4f3eb5ab0fd2a47148cb7ffef914815d,
+        type: 3}
+      propertyPath: ObstaclePrefab
       value: 
       objectReference: {fileID: 1897165418383321670, guid: cdcd1ddb832734aa1ba5e989d6066edd,
         type: 3}

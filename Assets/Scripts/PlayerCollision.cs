@@ -2,15 +2,15 @@
 
 public class PlayerCollision : MonoBehaviour
 {
-    public PlayerScript playerMovement;
+    public PlayerScript PlayerMovement;
     void OnCollisionEnter(Collision collisionInfo) {
-        if(collisionInfo.collider.tag == "Obstacle1" || collisionInfo.collider.tag == "Obstacle2" || collisionInfo.collider.tag == "Obstacle3")
+        if (collisionInfo.collider.tag == "Obstacle1" || collisionInfo.collider.tag == "Obstacle2" || collisionInfo.collider.tag == "Obstacle3")
         {
-            if(collisionInfo.impulse.z > 1.0){
+            if (collisionInfo.impulse.z > 1.0){
                 Debug.Log(collisionInfo.impulse);
                 Time.timeScale = 0.6f;
-                playerMovement.enabled = false;
-                FindObjectOfType<Score>().allowScore(false);
+                PlayerMovement.enabled = false;
+                FindObjectOfType<Score>().AllowScore = false;
                 FindObjectOfType<GameManager>().EndGame();
             }
         }

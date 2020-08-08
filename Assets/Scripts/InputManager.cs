@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
             FindObjectOfType<GameManager>().HandlePause();
         }
 
-        if(Input.GetKeyDown (KeyCode.Escape)) {
+        if (Input.GetKeyDown (KeyCode.Escape)) {
             FindObjectOfType<GameManager>().ExitGame();
         }
         
